@@ -8,23 +8,52 @@
   <body>
     <header class="header">
       <div class="logo">
-        <h1></h1>
+        <h1><a href="index.html">쇼핑몰</a></h1>
       </div>
       <div>
         <nav class="header-nev">
           <ul class="header-list">
-            <li><a href="#home">홈</a></li>
-            <li><a href="#home">회원조회</a></li>
-            <li><a href="#order">주문</a></li>
-            <li><a href="#item">상품</a></li>
-            <li><a href="#review">리뷰</a></li>
+            <li><a href="members.html">회원조회</a></li>
+            <li><a href="orders.html">주문</a></li>
+            <li><a href="products.html">상품</a></li>
+            <li><a href="reviews.html">리뷰</a></li>
+            <li><a href="login.html" id="auth-link">로그인</a></li>
           </ul>
         </nav>
       </div>
     </header>
+
     <main class="main-page">
       <div id="home"></div>
     </main>
+
     <footer></footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const authLink = document.getElementById("auth-link");
+        const loginToken = sessionStorage.getItem("loginToken");
+
+        if (loginToken) {
+          authLink.textContent = "로그아웃";
+          authLink.href = "#";
+
+          authLink.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            sessionStorage.removeItem("loginToken");
+
+            alert("로그아웃 되었습니다.");
+
+            // 메인 페이지 또는 로그인 페이지로 이동 (여기서는 메인 페이지로 새로고침)
+            window.location.href = "index.html";
+          });
+        } else {
+          // 2. 로그아웃(비로그인) 상태인 경우: 로그인 페이지로 이동
+          authLink.textContent = "로그인";
+          authLink.href = "login.html";
+        }
+      });
+    </script>
   </body>
 </html>
