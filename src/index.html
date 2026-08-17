@@ -4,56 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Main-page</title>
+    <link rel="stylesheet" href="/project1/fourward/src/css/style.css" />
     <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        font-family: "Malgun gothic", Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f9fcf9;
-        color: #333333;
-        line-height: 1.6;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-      }
-
-      .header {
-        background: linear-gradient(135deg, #ebf7ff, #d4edf9);
-        padding: 15px 30px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-      }
-
-      .logo h1 a {
-        text-decoration: none;
-        color: #2c3e50;
-        font-size: 22px;
-        font-weight: bold;
-      }
-
-      .header-list {
-        list-style: none;
-        display: flex;
-        gap: 20px;
-      }
-
-      .header-list li a {
-        text-decoration: none;
-        color: #4a5568;
-        font-weight: 500;
-        transition: color 0.2s;
-      }
-
-      .header-list li a:hover {
-        color: #3182ce;
-      }
-
       .main-page {
         flex: 1;
         max-width: 900px;
@@ -157,7 +109,7 @@
       <div>
         <nav class="header-nev">
           <ul class="header-list">
-            <li><a href="members.html">회원조회</a></li>
+            <li><a href="mypage.html">내정보</a></li>
             <li><a href="orders.html">주문</a></li>
             <li><a href="products.html">상품</a></li>
             <li><a href="reviews.html">리뷰</a></li>
@@ -182,10 +134,13 @@
               />
             </div>
             <div class="slide">
-              <img src="/project1/fourward/오리인형.jpg" alt="오리인형" />
+              <img src="/project1/fourward/img/오리인형.jpg" alt="오리인형" />
             </div>
             <div class="slide">
-              <img src="/project1/fourward/롤스로이스.jpg" alt="롤스로이스" />
+              <img
+                src="/project1/fourward/img/롤스로이스.jpg"
+                alt="롤스로이스"
+              />
             </div>
           </div>
           <button class="slider-btn prev-btn" id="prevBtn">&#10094;</button>

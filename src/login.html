@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>login-page</title>
+    <link rel="stylesheet" href="/project1/fourward/src/css/style.css" />
   </head>
   <body>
     <div class="login-container">
@@ -46,7 +47,7 @@
           console.log(data);
 
           if (data.success) {
-            const userToken = data.accessToken;
+            const userToken = data.data.accessToken;
             sessionStorage.setItem("loginToken", userToken);
 
             window.location.href = "index.html";

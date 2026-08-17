@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>내 정보 조회</title>
+    <link rel="stylesheet" href="/project1/fourward/src/css/style.css" />
+    <style>
+      .main-page {
+        flex: 1;
+        max-width: 600px;
+        width: 100%;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      .info-card {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        border-top: 5px solid #a8e6cf;
+      }
+
+      .info-card h2 {
+        margin-bottom: 20px;
+        color: #2d3748;
+        font-size: 24px;
+        text-align: center;
+      }
+
+      .info-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid #edf2f7;
+      }
+
+      .info-label {
+        font-weight: bold;
+        color: #4a5568;
+      }
+
+      .info-value {
+        color: #718096;
+      }
+
+      footer {
+        background-color: #edf2f7;
+        text-align: center;
+        padding: 20px;
+        font-size: 14px;
+        color: #718096;
+        border-top: 1px solid #e2e8f0;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo">
+        <h1><a href="index.html">내 쇼핑몰</a></h1>
+      </div>
+      <div>
+        <nav class="header-nev">
+          <ul class="header-list">
+            <li><a href="members.html">내정보</a></li>
+            <li><a href="orders.html">주문</a></li>
+            <li><a href="products.html">상품</a></li>
+            <li><a href="reviews.html">리뷰</a></li>
+            <li><a href="login.html" id="auth-link">로그인</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main-page">
+      <div class="info-card">
+        <h2>내 정보 조회</h2>
+        <div id="user-info-container">
+          <p style="text-align: center; color: #718096"></p>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 내 쇼핑몰.</p>
+    </footer>
+
+    <script>
+      console.log(sessionStorage.getItem("loginToken"));
+      document.addEventListener("DOMContentLoaded", async () => {
+        const authLink = document.getElementById("auth-link");
+
+        const loginToken = sessionStorage.getItem("loginToken");
+
+        if (loginToken) {
+          authLink.textContent = "로그아웃";
+          authLink.href = "#";
+          authLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            sessionStorage.removeItem("loginToken");
+            alert("로그아웃 되었습니다.");
+            window.location.href = "index.html";
+          });
+        } else {
+          alert("로그인이 필요한 페이지입니다.");
+          window.location.href = "login.html";
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            "http://teacherdev09.kro.kr:10002/endpoint/api/users/me",
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${loginToken}`,
+                "Content-Type": "application/json",
+              },
+            },
+          );
+
+          if (!response.ok) {
+            throw new Error(
+              `정보를 불러오지 못했습니다. (상태 코드: ${response.status})`,
+            );
+          }
+          const result = await response.json();
+          const userInfo = result.data || result;
+          const container = document.getElementById("user-info-container");
+          container.innerHTML = `
+            <div class="info-item"><span class="info-label">아이디</span><span class="info-value">${userInfo.id}</span></div>
+            <div class="info-item"><span class="info-label">이메일</span><span class="info-value">${userInfo.email}</span></div>
+            <div class="info-item"><span class="info-label">이름</span><span class="info-value">${userInfo.name}</span></div>
+            <div class="info-item"><span class="info-label">주소</span><span class="info-value">${userInfo.address}</span></div>
+            <div class="info-item"><span class="info-label">권한</span><span class="info-value">${userInfo.role}</span></div>
+            <div class="info-item"><span class="info-label">가입일자</span><span class="info-value">${userInfo.createAt}</span></div>
+          `;
+        } catch (error) {
+          console.error("에러 발생:", error);
+          document.getElementById("user-info-container").innerHTML = `
+            <p style="text-align: center; color: #e53e3e;">내 정보를 불러오는 중 오류가 발생했습니다.</p>
+          `;
+        }
+      });
+    </script>
+  </body>
+</html>
+
+```
