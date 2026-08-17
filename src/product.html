@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>product</title>
+    <style>
+      .spinner {
+        display: none;
+        width: 48px;
+        height: 48px;
+        border: 5px solid lightgray;
+        border-top-color: darkblue;
+        border-radius: 50%;
+        animation-name: spinner;
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite; /* 실행 횟수 */
+        animation-timing-function: linear;
+      }
+
+      @keyframes spinner {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="상품명" />
+      <button id="search-button">검색</button>
+    </div>
+    <div class="main-container">
+      <h2>상품 목록</h2>
+      <div id="product-container"></div>
+      <div id="loading-spinner" class="spinner"></div>
+    </div>
+    <script>
+      // 로딩중...
+      const showSpinner = () => {
+        const startSpinner = document.getElementById("loading-spinner");
+        startSpinner.style.display = "inline-block";
+      };
+      // 로딩 완료
+      const hideSpinner = () => {
+        const stopSpinner = document.getElementById("loading-spinner");
+        stopSpinner.style.display = "none";
+      };
+
+      // 화면 실행됐을 때 상품 목록 전체 보여주기
+      onload = async () => {
+        // 스피너 켜기
+        showSpinner();
+        const products = await fetch(
+          "http://teacherdev09.kro.kr:10002/endpoint/api/products",
+        );
+        if (!products.ok)
+          throw new Error("상품정보를 가져오는데 실패했습니다.");
+        const data = await products.json();
+        console.log(data);
+        const product = document.getElementById("product-container");
+        product.replaceChildren();
+
+        // 카테고리 불러오기
+        const categorySet = new Set();
+        const $select = document.createElement("select");
+        const $optionOri = document.createElement("option");
+        $optionOri.value = "";
+        $optionOri.textContent = "선택";
+        $select.appendChild($optionOri);
+
+        // 데이터 불러와서 div만들어서 넣기
+        data.data.content.forEach((item) => {
+          categorySet.add(item.category);
+
+          const $div = document.createElement("div");
+          const $h3 = document.createElement("h3");
+          const $p = document.createElement("p");
+          const $p2 = document.createElement("p");
+          const $p3 = document.createElement("p");
+          $h3.textContent = item.name;
+          $p.textContent = `${item.price}원`;
+          $p2.textContent = item.category;
+          $p3.textContent = item.description;
+
+          $div.appendChild($h3);
+          $div.appendChild($p);
+          $div.appendChild($p2);
+          $div.appendChild($p3);
+          product.appendChild($div);
+        });
+
+        categorySet.forEach((cat) => {
+          const $option = document.createElement("option");
+          $option.value = cat;
+          $option.textContent = cat;
+          $select.appendChild($option);
+        });
+        const searchContainer = document.querySelector(".search-container");
+        searchContainer.insertBefore($select, searchBtn);
+
+        // 스피너 끄기
+        hideSpinner();
+      };
+
+      // 검색 기능
+      const searchBtn = document.getElementById("search-button");
+      searchBtn.addEventListener("click", async () => {
+        const product = document.getElementById("product-container");
+        product.replaceChildren();
+        showSpinner();
+        const search = document.getElementById("search-input").value;
+        const category = document.querySelector(
+          ".search-container select",
+        ).value;
+
+        // 사용자가 입력을 아무것도 안했을 시 처리.
+        if (search === "" && category === "") {
+          alert("검색어나 카테고리를 입력해 주세요!");
+        }
+
+        const products = await fetch(
+          `http://teacherdev09.kro.kr:10002/endpoint/api/products?keyword=${search}&category=${category}`,
+        );
+        if (!products.ok)
+          throw new Error("상품정보를 가져오는데 실패했습니다.");
+        const data = await products.json();
+
+        if (data.success === false) {
+          product.textContent = data.message;
+        } else {
+          if (data.data.content.length === 0) {
+            product.textContent = "해당하는 상품이 없습니다.";
+          } else {
+            data.data.content.forEach((item) => {
+              const $div = document.createElement("div");
+              const $h3 = document.createElement("h3");
+              const $p = document.createElement("p");
+              const $p2 = document.createElement("p");
+              const $p3 = document.createElement("p");
+              $h3.textContent = item.name;
+              $p.textContent = `${item.price}원`;
+              $p2.textContent = item.category;
+              $p3.textContent = item.description;
+
+              $div.appendChild($h3);
+              $div.appendChild($p);
+              $div.appendChild($p2);
+              $div.appendChild($p3);
+              product.appendChild($div);
+            });
+          }
+        }
+
+        hideSpinner();
+      });
+    </script>
+  </body>
+</html>
