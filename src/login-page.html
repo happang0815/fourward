@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>login-page</title>
+  </head>
+  <body>
+    <div class="login-container">
+      <form class="form" action="">
+        <fieldset>
+          <input type="text" name="email" id="email" /><br />
+          <input type="password" name="password" id="password" /><br />
+          <button type="submit">로그인</button>
+        </fieldset>
+        <button type="button">회원가입</button>
+      </form>
+    </div>
+    <script>
+      //테스트 id, password
+      // admin@example.com / admin123!
+      document.querySelector("form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const emailInput = document.getElementById("email").value.trim();
+        const passwordInput = document.getElementById("password").value.trim();
+        const userInfo = { email: emailInput, password: passwordInput };
+        try {
+          const response = await fetch(
+            "http://teacherdev09.kro.kr:10002/endpoint/api/users/login",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(userInfo),
+            },
+          );
+          if (!response.ok) throw new Error(`입력 오류: ${response.status}`);
+          const data = await response.json();
+          console.log(data);
+        } catch (error) {
+          console.error("에러 발생:", error);
+          alert("에러 발생.");
+        } finally {
+          document.querySelector("button[type='submit']").disabled = false;
+        }
+        if (data.success) {
+          const userToken = data.accessToken;
+          sessionStorage.setItem("loginToken", userToken);
+          const user = data.user;
+          document.querySelector("#login-container form").style.display =
+            "none";
+        }
+      });
+
+      //   const $btn=document.createElement("button");
+      //   $btn.innerHTML="내정보보기";
+      //   $btn.addEventListener("click", async (e)=> {
+      //     const response=await
+      //   })
+      //   }
+    </script>
+  </body>
+</html>
