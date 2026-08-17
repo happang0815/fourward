@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰작성페이지</title>
+</head>
+
+<body>
+    <section id="review-create-container">
+        <h1>리뷰 등록하기</h1>
+
+        <p>
+            <label>상품 ID: </label>
+            <input type="text" id="reviewId" placeholder="상품 ID 입력 (예: 1)" />
+        </p>
+
+        <p>
+            <label>작성자: </label>
+            <input type="text" id="authorInput" placeholder="작성자 이름" />
+        </p>
+
+        <p>
+            <label>평점: </label>
+            <select id="ratingInput">
+                <option value="5">5점</option>
+                <option value="4">4점</option>
+                <option value="3">3점</option>
+                <option value="2">2점</option>
+                <option value="1">1점</option>
+            </select>
+        </p>
+        <p>
+            <label>리뷰 내용: </label><br>
+            <textarea id="contentInput" rows="4" cols="30" placeholder="리뷰 내용을 입력하세요"></textarea>
+        </p>
+
+        <button onclick="createReview()">리뷰 등록</button>
+    </section>
+    <section>
+        <h1>리뷰 삭제</h1>
+        <p>
+            <label>삭제할 리뷰 ID: </label>
+            <input type="text" id="deleteReviewIdInput" placeholder="삭제할 리뷰 ID 입력" />
+            <button type="button" onclick="deleteReview()">리뷰 삭제하기</button>
+    </section>
+
+    <hr>
+    <a href="review.html">👈 리뷰 목록 페이지로 돌아가기</a>
+
+    <script src="/src/js/write-review.js"></script>
+
+</body>
+
+</html>

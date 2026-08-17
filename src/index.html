@@ -3,7 +3,220 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Main-page</title>
+    <link rel="stylesheet" href="/project1/fourward/src/css/style.css" />
+    <style>
+      .main-page {
+        flex: 1;
+        max-width: 900px;
+        width: 100%;
+        margin: 30px auto;
+        padding: 0 20px;
+      }
+
+      .hero-banner {
+        background: linear-gradient(135deg, #e0ffdb, #cbeed7);
+        padding: 30px;
+        border-radius: 12px;
+        text-align: center;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+      }
+
+      .hero-banner h2 {
+        font-size: 26px;
+        color: #2d3748;
+        margin-bottom: 8px;
+      }
+
+      .hero-banner p {
+        color: #4a5568;
+        font-size: 15px;
+      }
+
+      .slider-container {
+        position: relative;
+        width: 100%;
+        height: 450px;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        background-color: #f0f4f1;
+      }
+
+      .slider-track {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .slide {
+        min-width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .slider-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.4);
+        color: white;
+        border: none;
+        font-size: 24px;
+        padding: 10px 15px;
+        cursor: pointer;
+        border-radius: 50%;
+        transition: background-color 0.2s;
+        z-index: 10;
+      }
+
+      .slider-btn:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+
+      .prev-btn {
+        left: 15px;
+      }
+      .next-btn {
+        right: 15px;
+      }
+
+      footer {
+        background-color: #edf2f7;
+        text-align: center;
+        padding: 20px;
+        font-size: 14px;
+        color: #718096;
+        border-top: 1px solid #e2e8f0;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <header class="header">
+      <div class="logo">
+        <h1><a href="index.html">쇼핑몰</a></h1>
+      </div>
+      <div>
+        <nav class="header-nev">
+          <ul class="header-list">
+            <li><a href="mypage.html">내정보</a></li>
+            <li><a href="orders.html">주문</a></li>
+            <li><a href="products.html">상품</a></li>
+            <li><a href="reviews.html">리뷰</a></li>
+            <li><a href="login.html" id="auth-link">로그인</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main-page">
+      <div id="home">
+        <div class="hero-banner">
+          <h2>나만의 쇼핑몰</h2>
+          <p>모든 상품관리를 한번에!</p>
+        </div>
+        <div class="slider-container">
+          <div class="slider-track" id="sliderTrack">
+            <div class="slide">
+              <img
+                src="/project1/fourward/img/Nintendo-Swiych-img.jpg"
+                alt="닌텐도 스위치"
+              />
+            </div>
+            <div class="slide">
+              <img src="/project1/fourward/img/오리인형.jpg" alt="오리인형" />
+            </div>
+            <div class="slide">
+              <img
+                src="/project1/fourward/img/롤스로이스.jpg"
+                alt="롤스로이스"
+              />
+            </div>
+          </div>
+          <button class="slider-btn prev-btn" id="prevBtn">&#10094;</button>
+          <button class="slider-btn next-btn" id="nextBtn">&#10095;</button>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 내 쇼핑몰.</p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const authLink = document.getElementById("auth-link");
+        const loginToken = sessionStorage.getItem("loginToken");
+
+        if (loginToken) {
+          authLink.textContent = "로그아웃";
+          authLink.href = "#";
+          authLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            sessionStorage.removeItem("loginToken");
+            alert("로그아웃 되었습니다.");
+            window.location.href = "main.html";
+          });
+        } else {
+          authLink.textContent = "로그인";
+          authLink.href = "login.html";
+        }
+      });
+
+      const sliderTrack = document.getElementById("sliderTrack");
+      const slides = document.querySelectorAll(".slide");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+
+      let currentIndex = 0;
+      const totalSlides = slides.length;
+      let slideInterval;
+
+      function updateSlidePosition() {
+        sliderTrack.style.transform = `translateX(-${currentIndex * 100}%)`;
+      }
+
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateSlidePosition();
+      }
+
+      function prevSlide() {
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        updateSlidePosition();
+      }
+
+      function startAutoSlide() {
+        slideInterval = setInterval(nextSlide, 3000);
+      }
+
+      function stopAutoSlide() {
+        clearInterval(slideInterval);
+      }
+
+      nextBtn.addEventListener("click", () => {
+        stopAutoSlide();
+        nextSlide();
+        startAutoSlide();
+      });
+
+      prevBtn.addEventListener("click", () => {
+        stopAutoSlide();
+        prevSlide();
+        startAutoSlide();
+      });
+
+      startAutoSlide();
+    </script>
+  </body>
 </html>
