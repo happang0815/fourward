@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
     <title>product</title>
     <style>
       .spinner {
@@ -29,15 +30,37 @@
     </style>
   </head>
   <body>
+    <header class="header">
+      <div class="logo">
+        <h1><a href="index.html">쇼핑몰</a></h1>
+      </div>
+      <div>
+        <nav class="header-nev">
+          <ul class="header-list">
+            <li><a href="mypage.html">내정보</a></li>
+            <li><a href="orders.html">주문</a></li>
+            <li><a href="products.html">상품</a></li>
+            <li><a href="reviews.html">리뷰</a></li>
+            <li><a href="login.html" id="auth-link">로그인</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
     <div class="search-container">
       <input type="text" id="search-input" placeholder="상품명" />
       <button id="search-button">검색</button>
     </div>
+
     <div class="main-container">
       <h2>상품 목록</h2>
       <div id="product-container"></div>
       <div id="loading-spinner" class="spinner"></div>
     </div>
+
+    <footer>
+      <p>&copy; 2026 내 쇼핑몰.</p>
+    </footer>
     <script>
       // 로딩중...
       const showSpinner = () => {
