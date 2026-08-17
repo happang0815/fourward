@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>sigup-page</title>
+    <link rel="stylesheet" href="/project1/fourward/src/css/style.css" />
   </head>
   <body>
     <div class="signup-container">
@@ -63,20 +64,15 @@
             const data = await response.json();
 
             if (!response.ok) {
-              // 서버에서 에러 응답을 보낸 경우 (예: 중복된 이메일 등)
               throw new Error(
                 data.message || `회원가입 실패 (상태 코드: ${response.status})`,
               );
             }
-
-            // 회원가입 성공 시
             alert("회원가입 성공!");
             console.log("가입 정보:", data);
 
-            // 성공 시 로그인 페이지로 이동
             window.location.href = "login.html";
           } catch (error) {
-            // 회원가입 실패 시 (네트워크 오류 또는 서버 거절 등)
             console.error("에러 발생:", error);
             alert(`회원가입 실패...: ${error.message}`);
           }
