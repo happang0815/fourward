@@ -201,6 +201,10 @@
           $div.appendChild($p2);
           $div.appendChild($p3);
           product.appendChild($div);
+
+          $div.addEventListener("click", () => {
+            window.location.href = `detail.html?id=${item.id}`;
+          });
         });
 
         categorySet.forEach((cat) => {
@@ -269,6 +273,9 @@
               $div.appendChild($p2);
               $div.appendChild($p3);
               product.appendChild($div);
+              $div.addEventListener("click", () => {
+                window.location.href = `detail.html?id=${item.id}`;
+              });
             });
           }
         }
