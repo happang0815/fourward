@@ -4,19 +4,219 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>주문하기</title>
-    <link rel="stylesheet" href="/project1/fourward/src/css/style.css" />
+    <!-- 외부 style.css도 함께 연결 유지 -->
+    <link rel="stylesheet" href="./css/style.css" />
+
+    <style>
+      /* --- 기본 초기화 --- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+        background-color: #f4f6f8;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      /* --- 헤더 / 네비게이션 --- */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      .logo h1 a {
+        font-size: 22px;
+        font-weight: bold;
+        color: #2b6cb0;
+      }
+
+      .header-list {
+        display: flex;
+        list-style: none;
+        gap: 18px;
+      }
+
+      .header-list li a {
+        font-size: 15px;
+        color: #555;
+        font-weight: 500;
+      }
+
+      .header-list li a:hover {
+        color: #2b6cb0;
+      }
+
+      /* --- 메인 컨테이너 --- */
+      .main-page {
+        max-width: 580px;
+        margin: 40px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+      }
+
+      .main-page h2 {
+        font-size: 24px;
+        margin-bottom: 24px;
+        text-align: center;
+        color: #222;
+        border-bottom: 2px solid #2b6cb0;
+        padding-bottom: 12px;
+      }
+
+      /* --- 섹션 공통 --- */
+      .order-section,
+      .confirm-section {
+        margin-bottom: 28px;
+        padding: 18px;
+        background: #fafafa;
+        border-radius: 8px;
+        border: 1px solid #ebebeb;
+      }
+
+      .order-section h3,
+      .confirm-section h3 {
+        font-size: 17px;
+        margin-bottom: 16px;
+        color: #333;
+        font-weight: bold;
+      }
+
+      /* --- 폼 입력 영역 --- */
+      .form-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+
+      .form-row label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #555;
+        width: 100px;
+      }
+
+      .form-row select,
+      .form-row input[type="number"] {
+        flex: 1;
+        padding: 9px 12px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background-color: #fff;
+      }
+
+      .form-row span.info-val {
+        flex: 1;
+        font-size: 14px;
+        color: #222;
+        padding: 6px 0;
+      }
+
+      /* --- 총 금액 표시 --- */
+      .total-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 18px;
+        padding-top: 14px;
+        border-top: 2px dashed #ddd;
+        font-size: 17px;
+        font-weight: bold;
+      }
+
+      .total-box #totalPrice {
+        color: #e53e3e;
+        font-size: 20px;
+      }
+
+      /* --- 주문 버튼 --- */
+      .btn-order {
+        width: 100%;
+        margin-top: 16px;
+        padding: 13px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #2b6cb0;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      .btn-order:hover {
+        background-color: #205081;
+      }
+
+      /* --- 알림 및 메시지 영역 --- */
+      #loginRequiredMsg,
+      #orderMsg {
+        margin: 10px 0;
+        font-size: 13px;
+        color: #e53e3e;
+      }
+
+      /* --- 주문 확인 영역 --- */
+      #orderConfirmArea p {
+        font-size: 14px;
+        margin-bottom: 8px;
+        color: #444;
+      }
+
+      #orderConfirmArea p span {
+        font-weight: 600;
+        color: #111;
+      }
+
+      .link-btn {
+        display: inline-block;
+        margin-top: 14px;
+        font-size: 14px;
+        color: #2b6cb0;
+        font-weight: 600;
+      }
+
+      .link-btn:hover {
+        text-decoration: underline;
+      }
+
+      /* --- 푸터 --- */
+      footer {
+        text-align: center;
+        padding: 25px 0;
+        font-size: 13px;
+        color: #888;
+      }
+    </style>
   </head>
   <body>
+    <!-- 헤더 -->
     <header class="header">
       <div class="logo">
         <h1><a href="index.html">쇼핑몰</a></h1>
       </div>
       <div>
-        <nav class="header-nev">
+        <nav class="header-nav">
           <ul class="header-list">
             <li><a href="mypage.html">내정보</a></li>
             <li><a href="order.html">주문</a></li>
-            <li><a href="">상품</a></li>
+            <li><a href="product.html">상품</a></li>
             <li><a href="review.html">리뷰</a></li>
             <li><a href="login.html" id="auth-link">로그인</a></li>
           </ul>
@@ -24,54 +224,77 @@
       </div>
     </header>
 
+    <!-- 메인 컨텐츠 -->
     <main class="main-page">
       <h2>주문하기</h2>
 
-      <li>
-        주문
+      <!-- 1. 주문 폼 영역 -->
+      <section class="order-section">
+        <h3>주문 정보 입력</h3>
         <div id="loginRequiredMsg"></div>
+
         <div>
-          <label>상품 선택</label>
-          <select id="productSelect"></select>
-
-          <label>가격</label>
-          <span id="selectedPrice"></span>
-
-          <label>카테고리</label>
-          <span id="selectedCategory"></span>
-
-          <label>재고</label>
-          <span id="selectedStock"></span>
-
-          <label>수량</label>
-          <input type="number" id="quantity" value="1" min="1" />
-
-          <div>
-            <span>총 금액 : </span>
-            <span id="totalPrice"></span>
+          <div class="form-row">
+            <label for="productSelect">상품 선택</label>
+            <select id="productSelect">
+              <option value="">상품을 선택하세요</option>
+            </select>
           </div>
 
-          <button id="orderBtn">주문하기</button>
+          <div class="form-row">
+            <label>가격</label>
+            <span id="selectedPrice" class="info-val">-</span>
+          </div>
+
+          <div class="form-row">
+            <label>카테고리</label>
+            <span id="selectedCategory" class="info-val">-</span>
+          </div>
+
+          <div class="form-row">
+            <label>재고</label>
+            <span id="selectedStock" class="info-val">-</span>
+          </div>
+
+          <div class="form-row">
+            <label for="quantity">수량</label>
+            <input type="number" id="quantity" value="1" min="1" />
+          </div>
+
+          <div class="total-box">
+            <span>총 금액 : </span>
+            <span id="totalPrice">0원</span>
+          </div>
+
+          <button type="button" id="orderBtn" class="btn-order">
+            주문하기
+          </button>
         </div>
         <div id="orderMsg"></div>
-      </li>
+      </section>
 
-      <li>
-        주문 확인
+      <!-- 2. 주문 완료 확인 영역 -->
+      <section class="confirm-section">
+        <h3>주문 확인</h3>
         <div id="orderConfirmArea">
-          <p>주문번호 : <span id="confirmOrderId"></span></p>
-          <p>주문상품 : <span id="confirmProductName"></span></p>
-          <p>수량 : <span id="confirmQuantity"></span></p>
-          <p>총금액 : <span id="confirmTotalPrice"></span></p>
+          <p>주문번호 : <span id="confirmOrderId">-</span></p>
+          <p>주문상품 : <span id="confirmProductName">-</span></p>
+          <p>수량 : <span id="confirmQuantity">-</span></p>
+          <p>총금액 : <span id="confirmTotalPrice">-</span></p>
         </div>
-        <a href="order-list.html">내 주문목록에서 확인하기</a>
-      </li>
+        <a href="orderlist.html" class="link-btn"
+          >👉 내 주문목록에서 확인하기</a
+        >
+      </section>
     </main>
 
+    <!-- 푸터 -->
     <footer>
-      <p>&copy; 2026 내 쇼핑몰.</p>
+      <p>&copy; 2026 내 쇼핑몰. All rights reserved.</p>
     </footer>
 
-    <script src="order.js"></script>
+    <!-- 자바스크립트 연결 -->
+    <script src="./js/common.js"></script>
+    <script src="./js/order.js"></script>
   </body>
 </html>
