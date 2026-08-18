@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>상품상세</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style></style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo">
+        <h1><a href="index.html">쇼핑몰</a></h1>
+      </div>
+      <div>
+        <nav class="header-nev">
+          <ul class="header-list">
+            <li><a href="mypage.html">내정보</a></li>
+            <li><a href="orders.html">주문</a></li>
+            <li><a href="products.html">상품</a></li>
+            <li><a href="reviews.html">리뷰</a></li>
+            <li><a href="login.html" id="auth-link">로그인</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div class="product-detail-container">
+      <h2 id="detail-name"></h2>
+      <h3 id="detail-category"></h3>
+      <p id="detail-price" class="product-price"></p>
+      <p id="detail-desc"></p>
+    </div>
+    <footer>
+      <p>&copy; 2026 내 쇼핑몰.</p>
+    </footer>
+    <script>
+      window.onload = async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get("id");
+        // 이런 식으로 fetch 주소 끝에 번호를 달아줍니다.
+        const response = await fetch(
+          `http://teacherdev09.kro.kr:10002/endpoint/api/products/${productId}`,
+        );
+        if (!response.ok)
+          throw new Error("상품정보를 가져오는데 실패했습니다.");
+        const data = await response.json();
+        console.log(data);
+        const item = data.data;
+        document.getElementById("detail-name").textContent = item.name;
+        document.getElementById("detail-category").textContent = item.category;
+        document.getElementById("detail-price").textContent = `${item.price}원`;
+        document.getElementById("detail-desc").textContent = item.description;
+      };
+    </script>
+  </body>
+</html>

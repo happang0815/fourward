@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Main-page</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/fourward/src/css/style.css" />
     <style>
       .main-page {
         flex: 1;
@@ -101,9 +101,9 @@
         <nav class="header-nev">
           <ul class="header-list">
             <li><a href="mypage.html">내정보</a></li>
-            <li><a href="orders.html">주문</a></li>
-            <li><a href="products.html">상품</a></li>
-            <li><a href="reviews.html">리뷰</a></li>
+            <li><a href="order.html">주문</a></li>
+            <li><a href="product.html">상품</a></li>
+            <li><a href="review.html">리뷰</a></li>
             <li><a href="login.html" id="auth-link">로그인</a></li>
           </ul>
         </nav>
@@ -137,27 +137,8 @@
     <footer>
       <p>&copy; 2026 내 쇼핑몰.</p>
     </footer>
-
+    <script src="/fourward/src/js/login.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const authLink = document.getElementById("auth-link");
-        const loginToken = sessionStorage.getItem("loginToken");
-
-        if (loginToken) {
-          authLink.textContent = "로그아웃";
-          authLink.href = "#";
-          authLink.addEventListener("click", (e) => {
-            e.preventDefault();
-            sessionStorage.removeItem("loginToken");
-            alert("로그아웃 되었습니다.");
-            window.location.href = "main.html";
-          });
-        } else {
-          authLink.textContent = "로그인";
-          authLink.href = "login.html";
-        }
-      });
-
       const sliderTrack = document.getElementById("sliderTrack");
       const slides = document.querySelectorAll(".slide");
       const prevBtn = document.getElementById("prevBtn");

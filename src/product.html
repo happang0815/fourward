@@ -52,19 +52,20 @@
       }
       #product-container {
         display: grid;
-        align-items: stretch;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         gap: 20px;
+        align-items: start;
       }
       #product-container div {
         display: flex;
+        position: relative;
         flex-direction: column;
         background-color: white;
-        border: 1px solid rgb(233, 233, 233);
         border-radius: 10px;
-        padding: 10px;
+        padding: 10px 20px;
         transition: transform 0.3s ease;
         box-shadow: 0 4px 6px rgb(0 0 0/0.1);
+        aspect-ratio: 1/1;
       }
       #product-container div:hover {
         cursor: pointer;
@@ -72,13 +73,36 @@
       }
       #product-container h3 {
         padding-bottom: 10px;
-        margin-bottom: 10px;
+        margin: 25px 0 10px 0;
         border-bottom: 1px solid lightgray;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .product-price {
         color: #e94c4c;
         font-size: 18px;
         font-weight: bold;
+      }
+      .badge {
+        position: absolute;
+        top: -12px;
+        left: -12px;
+        background-color: #ff4757;
+        color: white;
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 13px;
+        font-weight: bold;
+        z-index: 10;
+        box-shadow: 2px 2px 6px rgb(0 0 0/0.2);
+      }
+      .product-desc {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        color: #666;
       }
     </style>
   </head>
@@ -91,15 +115,18 @@
         <nav class="header-nev">
           <ul class="header-list">
             <li><a href="mypage.html">내정보</a></li>
-            <li><a href="orders.html">주문</a></li>
-            <li><a href="products.html">상품</a></li>
-            <li><a href="reviews.html">리뷰</a></li>
+            <li><a href="order.html">주문</a></li>
+            <li><a href="product.html">상품</a></li>
+            <li><a href="review.html">리뷰</a></li>
             <li><a href="login.html" id="auth-link">로그인</a></li>
           </ul>
         </nav>
       </div>
     </header>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0e87854e8cce8b6c31a775bd85637769d6c65d2c
     <div class="container">
       <div class="search-container">
         <input type="text" id="search-input" placeholder="상품명" />
@@ -111,10 +138,14 @@
         <div id="loading-spinner" class="spinner"></div>
       </div>
     </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0e87854e8cce8b6c31a775bd85637769d6c65d2c
     <footer>
       <p>&copy; 2026 내 쇼핑몰.</p>
     </footer>
+    <script src="/fourward/src/js/login.js"></script>
     <script>
       // 로딩중...
       const showSpinner = () => {
@@ -158,17 +189,30 @@
           const $p = document.createElement("p");
           const $p2 = document.createElement("p");
           const $p3 = document.createElement("p");
+
           $h3.textContent = item.name;
           $p.textContent = `${item.price}원`;
           $p.className = "product-price";
           $p2.textContent = item.category;
           $p3.textContent = item.description;
+          $p3.className = "product-desc";
+
+          if (item.stockQuantity < 40) {
+            const $badge = document.createElement("span");
+            $badge.textContent = "품절임박";
+            $badge.className = "badge";
+            $div.appendChild($badge);
+          }
 
           $div.appendChild($h3);
           $div.appendChild($p);
           $div.appendChild($p2);
           $div.appendChild($p3);
           product.appendChild($div);
+
+          $div.addEventListener("click", () => {
+            window.location.href = `detail.html?id=${item.id}`;
+          });
         });
 
         categorySet.forEach((cat) => {
@@ -223,12 +267,23 @@
               $p.textContent = `${item.price}원`;
               $p2.textContent = item.category;
               $p3.textContent = item.description;
+              $p3.className = "product-desc";
+
+              if (item.stockQuantity < 40) {
+                const $badge = document.createElement("span");
+                $badge.textContent = "품절임박";
+                $badge.className = "badge";
+                $div.appendChild($badge);
+              }
 
               $div.appendChild($h3);
               $div.appendChild($p);
               $div.appendChild($p2);
               $div.appendChild($p3);
               product.appendChild($div);
+              $div.addEventListener("click", () => {
+                window.location.href = `detail.html?id=${item.id}`;
+              });
             });
           }
         }
