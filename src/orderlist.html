@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>내 주문목록</title>
+    <link rel="stylesheet" href="/fourward/src/css/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo">
+        <h1><a href="index.html">쇼핑몰</a></h1>
+      </div>
+      <div>
+        <nav class="header-nev">
+          <ul class="header-list">
+            <li><a href="mypage.html">내정보</a></li>
+            <li><a href="order.html">주문</a></li>
+            <li><a href="product.html">상품</a></li>
+            <li><a href="review.html">리뷰</a></li>
+            <li><a href="login.html" id="auth-link">로그인</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main-page">
+      <h2>내 주문목록</h2>
+
+      <li>
+        주문 내역
+        <div id="orderListLoginMsg"></div>
+        <div>
+          <button id="loadOrdersBtn">주문내역 불러오기</button>
+          <div id="orderListLoading" style="display: none">
+            불러오는 중입니다
+          </div>
+          <table id="orderTable">
+            <thead>
+              <tr>
+                <th>주문번호</th>
+                <th>주문상품</th>
+                <th>가격</th>
+                <th>수량</th>
+                <th>총금액</th>
+                <th>상태</th>
+                <th>주문일자</th>
+              </tr>
+            </thead>
+            <tbody id="orderTableBody"></tbody>
+          </table>
+          <div id="orderListEmpty"></div>
+        </div>
+        <div id="listMsg"></div>
+      </li>
+
+      <a href="order.html">주문하러 가기</a>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 내 쇼핑몰.</p>
+    </footer>
+
+    <script src="order-list.js"></script>
+  </body>
+</html>

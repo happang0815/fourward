@@ -46,3 +46,12 @@ body {
 .header-list li a:hover {
   color: #3182ce;
 }
+
+footer {
+  background-color: #edf2f7;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  color: #718096;
+  border-top: 1px solid #e2e8f0;
+}
