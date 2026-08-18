@@ -5,21 +5,156 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>리뷰보는페이지</title>
+    <link rel="stylesheet" href="/fourward/src/css/style.css" />
+    <style>
+  
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: #f8fafc;
+            color: #333;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-page {
+            flex: 1;
+            max-width: 900px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #e0ffdb, #cbeed7);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        .hero-banner h2 {
+            font-size: 26px;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .hero-banner p {
+            color: #4a5568;
+            font-size: 15px;
+            margin: 0;
+        }
+
+        .review-card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .review-card h3 {
+            margin-top: 0;
+            margin-bottom: 16px;
+            color: #2d3748;
+            font-size: 18px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: #48bb78;
+        }
+
+        .search-box button {
+            padding: 10px 20px;
+            background-color: #48bb78;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .search-box button:hover {
+            background-color: #38a169;
+        }
+
+    
+        #reviewList {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #reviewList li {
+            padding: 12px 16px;
+            background-color: #f7fafc;
+            border: 1px solid #edf2f7;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            color: #4a5568;
+        }
+
+        footer {
+            background-color: #edf2f7;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #718096;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="review-container">
-        <h1>상품 리뷰 관리</h1>
-        <section>
-            <h3>상품 리뷰 조회</h3>
-            <input type="text" id="reviewId" placeholder="상품 ID를 입력하세요." />
-            <button onclick="loadReviews()">상품 리뷰 조회</button>
-            <ul id="reviewList"></ul>
-        </section>
+    <main class="main-page">
+        <header class="hero-banner">
+            <h2>상품 리뷰 관리</h2>
+            <p>등록된 상품 리뷰를 조회하고 관리하세요.</p>
+        </header>
 
-        <hr>
+        <div id="review-container" class="review-card">
+            <section>
+                <h3>상품 리뷰 조회</h3>
+                <div class="search-box">
+                    <input type="text" id="reviewId" placeholder="상품 ID를 입력하세요." />
+                    <button onclick="loadReviews()">조회하기</button>
+                </div>
+                <ul id="reviewList"></ul>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Fourward. All rights reserved.</p>
+    </footer>
+
     <script src="js/review.js"></script>
-
 </body>
 
 </html>

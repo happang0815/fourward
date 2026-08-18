@@ -5,52 +5,243 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>리뷰작성페이지</title>
+    <link rel="stylesheet" href="/project1/fourward/src/css/style.css" />
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: #f8fafc;
+            color: #333;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-page {
+            flex: 1;
+            max-width: 900px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #e0ffdb, #cbeed7);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        .hero-banner h2 {
+            font-size: 26px;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .hero-banner p {
+            color: #4a5568;
+            font-size: 15px;
+            margin: 0;
+        }
+
+        .form-card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 24px;
+        }
+
+        .form-card h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #2d3748;
+            font-size: 18px;
+            border-bottom: 1px solid #edf2f7;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #48bb78;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: #48bb78;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #38a169;
+        }
+
+        .btn-danger {
+            background-color: #e53e3e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-danger:hover {
+            background-color: #c53030;
+        }
+
+        .delete-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        .delete-box input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .delete-box input:focus {
+            border-color: #e53e3e;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #2b6cb0;
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #edf2f7;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #718096;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
 </head>
 
 <body>
-    <section id="review-create-container">
-        <h1>리뷰 등록하기</h1>
+    <main class="main-page">
+        <header class="hero-banner">
+            <h2>리뷰 작성 및 관리</h2>
+            <p>새로운 상품 리뷰를 등록하거나 기존 리뷰를 삭제할 수 있습니다.</p>
+        </header>
 
-        <p>
-            <label>상품 ID: </label>
-            <input type="text" id="reviewId" placeholder="상품 ID 입력 (예: 1)" />
-        </p>
 
-        <p>
-            <label>작성자: </label>
-            <input type="text" id="authorInput" placeholder="작성자 이름" />
-        </p>
+        <section id="review-create-container" class="form-card">
+            <h3>리뷰 등록하기</h3>
 
-        <p>
-            <label>평점: </label>
-            <select id="ratingInput">
-                <option value="5">5점</option>
-                <option value="4">4점</option>
-                <option value="3">3점</option>
-                <option value="2">2점</option>
-                <option value="1">1점</option>
-            </select>
-        </p>
-        <p>
-            <label>리뷰 내용: </label><br>
-            <textarea id="contentInput" rows="4" cols="30" placeholder="리뷰 내용을 입력하세요"></textarea>
-        </p>
+            <div class="form-group">
+                <label for="reviewId">상품 ID</label>
+                <input type="text" id="reviewId" placeholder="상품 ID 입력 (예: 1)" />
+            </div>
 
-        <button onclick="createReview()">리뷰 등록</button>
-    </section>
-    <section>
-        <h1>리뷰 삭제</h1>
-        <p>
-            <label>삭제할 리뷰 ID: </label>
-            <input type="text" id="deleteReviewIdInput" placeholder="삭제할 리뷰 ID 입력" />
-            <button type="button" onclick="deleteReview()">리뷰 삭제하기</button>
-    </section>
+            <div class="form-group">
+                <label for="authorInput">작성자</label>
+                <input type="text" id="authorInput" placeholder="작성자 이름" />
+            </div>
 
-    <hr>
-    <a href="review.html">👈 리뷰 목록 페이지로 돌아가기</a>
+            <div class="form-group">
+                <label for="ratingInput">평점</label>
+                <select id="ratingInput">
+                    <option value="5">⭐⭐⭐⭐⭐ (5점)</option>
+                    <option value="4">⭐⭐⭐⭐ (4점)</option>
+                    <option value="3">⭐⭐⭐ (3점)</option>
+                    <option value="2">⭐⭐ (2점)</option>
+                    <option value="1">⭐ (1점)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="contentInput">리뷰 내용</label>
+                <textarea id="contentInput" rows="4" placeholder="리뷰 내용을 입력하세요"></textarea>
+            </div>
+
+            <button type="button" class="btn-submit" onclick="createReview()">리뷰 등록</button>
+        </section>
+
+        <section class="form-card">
+            <h3>리뷰 삭제</h3>
+            <div class="delete-box">
+                <input type="text" id="deleteReviewIdInput" placeholder="삭제할 리뷰 ID 입력" />
+                <button type="button" class="btn-danger" onclick="deleteReview()">리뷰 삭제하기</button>
+            </div>
+        </section>
+
+        <div>
+            <a href="review.html" class="back-link">👈 리뷰 목록 페이지로 돌아가기</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Fourward. All rights reserved.</p>
+    </footer>
 
     <script src="/src/js/write-review.js"></script>
-
 </body>
 
 </html>
