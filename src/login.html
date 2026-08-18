@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>login-page</title>
+    <link rel="stylesheet" href="/fourward/src/css/style.css" />
+  </head>
+  <body>
+    <div class="login-container">
+      <form class="form" action="">
+        <fieldset>
+          <input type="text" name="email" id="email" /><br />
+          <input type="password" name="password" id="password" /><br />
+          <button type="submit">로그인</button>
+        </fieldset>
+        <button type="button" id="signup-btn">회원가입</button>
+      </form>
+    </div>
+    <script>
+      document.getElementById("signup-btn").addEventListener("click", () => {
+        window.location.href = "signup.html";
+      });
+      // 테스트 id, password
+      // admin@example.com / admin123!
+      document.querySelector("form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const emailInput = document.getElementById("email").value.trim();
+        const passwordInput = document.getElementById("password").value.trim();
+        const userInfo = { email: emailInput, password: passwordInput };
+
+        let data;
+
+        try {
+          const response = await fetch(
+            "http://teacherdev09.kro.kr:10002/endpoint/api/users/login",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(userInfo),
+            },
+          );
+          if (!response.ok) throw new Error(`입력 오류: ${response.status}`);
+          data = await response.json();
+          console.log(data);
+
+          if (data.success) {
+            const userToken = data.data.accessToken;
+            sessionStorage.setItem("loginToken", userToken);
+
+            window.location.href = "index.html";
+          }
+        } catch (error) {
+          console.error("에러 발생:", error);
+          alert("에러 발생.");
+        } finally {
+          document.querySelector("button[type='submit']").disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>
