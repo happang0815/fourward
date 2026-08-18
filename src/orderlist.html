@@ -4,15 +4,200 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>내 주문목록</title>
-    <link rel="stylesheet" href="/fourward/src/css/style.css" />
+    <!-- 외부 공통 CSS 연결 유지 -->
+    <link rel="stylesheet" href="./css/style.css" />
+
+    <style>
+      /* --- 기본 초기화 --- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+        background-color: #f4f6f8;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      /* --- 헤더 / 네비게이션 --- */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      .logo h1 a {
+        font-size: 22px;
+        font-weight: bold;
+        color: #2b6cb0;
+      }
+
+      .header-list {
+        display: flex;
+        list-style: none;
+        gap: 18px;
+      }
+
+      .header-list li a {
+        font-size: 15px;
+        color: #555;
+        font-weight: 500;
+      }
+
+      .header-list li a:hover {
+        color: #2b6cb0;
+      }
+
+      /* --- 메인 레이아웃 --- */
+      .main-page {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+      }
+
+      .main-page h2 {
+        font-size: 24px;
+        margin-bottom: 24px;
+        text-align: center;
+        color: #222;
+        border-bottom: 2px solid #2b6cb0;
+        padding-bottom: 12px;
+      }
+
+      /* --- 주문 내역 섹션 --- */
+      .order-list-section {
+        margin-bottom: 20px;
+      }
+
+      .action-area {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+
+      .btn-load {
+        padding: 10px 18px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #fff;
+        background-color: #2b6cb0;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      .btn-load:hover {
+        background-color: #205081;
+      }
+
+      /* --- 테이블 스타일 --- */
+      .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+      }
+
+      #orderTable {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: center;
+        font-size: 14px;
+      }
+
+      #orderTable th,
+      #orderTable td {
+        padding: 12px 8px;
+        border-bottom: 1px solid #eee;
+      }
+
+      #orderTable th {
+        background-color: #f8fafc;
+        color: #4a5568;
+        font-weight: 600;
+        border-top: 1px solid #e2e8f0;
+      }
+
+      #orderTable tr:hover {
+        background-color: #f9fbff;
+      }
+
+      /* --- 알림 및 상태 메시지 --- */
+      #orderListLoading,
+      #orderListEmpty {
+        text-align: center;
+        padding: 30px;
+        color: #666;
+        font-size: 14px;
+      }
+
+      #orderListLoginMsg,
+      #listMsg {
+        margin-top: 10px;
+        font-size: 13px;
+        color: #e53e3e;
+      }
+
+      /* --- 하단 링크 및 푸터 --- */
+      .link-to-order {
+        display: inline-block;
+        margin-top: 20px;
+        font-size: 14px;
+        color: #2b6cb0;
+        font-weight: 600;
+      }
+
+      .link-to-order:hover {
+        text-decoration: underline;
+      }
+
+      footer {
+        text-align: center;
+        padding: 25px 0;
+        font-size: 13px;
+        color: #888;
+      }
+    </style>
+
+    <!-- [로그인 체크 스크립트] 페이지 로드 즉시 실행 -->
+    <script>
+      (function checkLogin() {
+        // localStorage / sessionStorage / 쿠키 등 사용하는 토큰 키값 확인 (기본값: token 또는 user)
+        const token =
+          localStorage.getItem("token") ||
+          sessionStorage.getItem("token") ||
+          localStorage.getItem("currentUser");
+
+        if (!token) {
+          alert("로그인이 필요한 페이지입니다. 로그인 화면으로 이동합니다.");
+          // 비로그인 시 login.html로 리다이렉트
+          window.location.href = "login.html";
+        }
+      })();
+    </script>
   </head>
   <body>
+    <!-- 헤더 -->
     <header class="header">
       <div class="logo">
         <h1><a href="index.html">쇼핑몰</a></h1>
       </div>
       <div>
-        <nav class="header-nev">
+        <nav class="header-nav">
           <ul class="header-list">
             <li><a href="mypage.html">내정보</a></li>
             <li><a href="order.html">주문</a></li>
@@ -24,17 +209,21 @@
       </div>
     </header>
 
+    <!-- 메인 컨텐츠 -->
     <main class="main-page">
       <h2>내 주문목록</h2>
 
-      <li>
-        주문 내역
+      <section class="order-list-section">
         <div id="orderListLoginMsg"></div>
-        <div>
-          <button id="loadOrdersBtn">주문내역 불러오기</button>
+
+        <div class="action-area">
+          <button id="loadOrdersBtn" class="btn-load">주문내역 불러오기</button>
           <div id="orderListLoading" style="display: none">
-            불러오는 중입니다
+            불러오는 중입니다...
           </div>
+        </div>
+
+        <div class="table-responsive">
           <table id="orderTable">
             <thead>
               <tr>
@@ -47,20 +236,26 @@
                 <th>주문일자</th>
               </tr>
             </thead>
-            <tbody id="orderTableBody"></tbody>
+            <tbody id="orderTableBody">
+              <!-- JS를 통해 <tr> 데이터가 추가되는 영역 -->
+            </tbody>
           </table>
-          <div id="orderListEmpty"></div>
         </div>
-        <div id="listMsg"></div>
-      </li>
 
-      <a href="order.html">주문하러 가기</a>
+        <div id="orderListEmpty"></div>
+        <div id="listMsg"></div>
+      </section>
+
+      <a href="order.html" class="link-to-order">🛍️ 주문하러 가기</a>
     </main>
 
+    <!-- 푸터 -->
     <footer>
-      <p>&copy; 2026 내 쇼핑몰.</p>
+      <p>&copy; 2026 내 쇼핑몰. All rights reserved.</p>
     </footer>
 
-    <script src="/fourward/src/js/orderlist.js"></script>
+    <!-- JS 스크립트 연결 (폴더 구조에 맞춰 ./js/ 로 지정) -->
+    <script src="./js/common.js"></script>
+    <script src="./js/orderlist.js"></script>
   </body>
 </html>
